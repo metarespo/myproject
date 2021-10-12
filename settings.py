@@ -75,6 +75,16 @@ SESSION_CONFIGS = [
         name='ultimatum',
         app_sequence=['ultimatum', 'payment_info'],
         num_demo_participants=2,
+    ),
+    dict(
+        name='imagelink',
+        app_sequence=['imagelink'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='imageupload',
+        app_sequence=['imageupload'],
+        num_demo_participants=1,
     )
 
 ]

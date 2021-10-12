@@ -1,0 +1,15 @@
+{{ block title }}
+    Image display
+{{ endblock }}
+{{ block content }}
+    <p>800 * 600 image </p>
+    <img src="{{ static 'imageupload/1.jpg' }}"
+     width="600px"/>
+    <p>1024 * 768 image </p>
+    <img src="{{ static 'imageupload/2.jpg' }}"
+     width="768px"/>
+
+    {{ formfields }}
+    {{ next_button }}
+
+{{ endblock }}

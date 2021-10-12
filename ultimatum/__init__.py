@@ -1,38 +1,22 @@
 from otree.api import *
 
 doc = """
-The Ultimatum Game (2n players)
-First, every player will be randomly paired with another player. In other words, you will 
-have a counterpart, but you will not be told who it is. Your identity will also remain
- hidden from your counterpart.
-
-The two participants in a pair will have two different roles: the proposer and the
- responder. You will be assigned randomly to a role, and it will be displayed on the next
- page.
-
-The two of you will together receive 100 points. The experiment is about how to divide 
-this amount. The proposer will make the responder a take-it-or-leave-it offer, which the
- responder can accept or reject. If the offer is rejected, both will receive 0 points.
-Proposer's role
+Strategy method for ultimatum game.
 """
 
 
 class Constants(BaseConstants):
-    name_in_url = 'ultimatum'
+    name_in_url = 'strategy_method'
     players_per_group = 2
     num_rounds = 1
-    instructions_template = 'ultimatum/instructions.html'
-    # Initial amount allocated to the dictator
+    instructions_file = __name__ + '/instructions.html'
     endowment = cu(100)
     offer_choices = currency_range(0, endowment, 10)
     offer_choices_count = len(offer_choices)
 
     possible_allocations = []
     for offer in offer_choices:
-        possible_allocations.append(dict(
-            p1_amount=offer,
-            p2_amount=endowment - offer
-        ))
+        possible_allocations.append(dict(p1_amount=offer, p2_amount=endowment - offer))
 
 
 class Subsession(BaseSubsession):
@@ -43,6 +27,7 @@ def make_strategy_field(number):
     return models.BooleanField(
         label="Would you accept an offer of {}?".format(cu(number)),
         widget=widgets.RadioSelectHorizontal,
+        # note to self: remove this once i release bugfix
         choices=[[False, 'No'], [True, 'Yes']],
     )
 
@@ -50,7 +35,14 @@ def make_strategy_field(number):
 class Group(BaseGroup):
     amount_offered = models.CurrencyField(choices=Constants.offer_choices,)
     offer_accepted = models.BooleanField()
-
+    # another way to implement this game would be with an ExtraModel, instead of making
+    # all these hardcoded fields.
+    # that's what the choice_list app does.
+    # that would be more flexible, but also more complex since you would have to implement the
+    # formfields yourself with HTML and Javascript.
+    # in this case, since the rules of the game are pretty simple,
+    # and there are not too many fields,
+    # just defining these hardcoded fields is fine.
     response_0 = make_strategy_field(0)
     response_10 = make_strategy_field(10)
     response_20 = make_strategy_field(20)
