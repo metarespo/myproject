@@ -2,7 +2,7 @@
 # myproject - GIPE - Behavioural Economics 
 ------------------------------------------
 
-#Surveys \n
+#Surveys /n
 #Experimental Research
 #Python
 #Research paper
